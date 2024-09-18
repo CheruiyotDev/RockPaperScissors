@@ -14,46 +14,44 @@ function getComputerChoice() {
   }
   return computerMove;
 }
-console.log(getComputerChoice())
-
 
 function getHumanChoice() {
-  let num = Number(prompt("enter a number"))
-  return num
+    let humanChoice = prompt("Choose: Rock | Paper | Scissors");
+    return humanChoice.toLowerCase();
 }
-console.log(getHumanChoice())
 
 function playRound(humanChoice, computerChoice) {
 
+    const winConditions = {
+        rock: "scissors",
+        scissors: "paper",
+        paper: "rock"
+    };
+
+    if (humanChoice === computerChoice) {
+        console.log("Tie!");
+    } else if (winConditions[humanChoice] === computerChoice) {
+        console.log(`You win, ${humanChoice} beats ${computerChoice}!`);
+        humanScore++;
+    } else {
+        console.log(`You lose, ${computerChoice} beats ${humanChoice}!`);
+        computerScore++;
+    }
 }
 
 function playGame() {
-  const computerMove = getComputerChoice();
-
-  let result = '';
-  if (playerMove === 'scissors') {
-    if (computerMove === 'rock') {
-      result = 'You lose.'
-    } else if (computerMove === 'paper') {
-      result = 'You win.';
-    } else if (computerMove === 'scissors') {
-      result = 'Tie.';
+    for (let i = 0; i < 5; i++) {
+        const humanSelection = getHumanChoice();
+        const computerSelection = getComputerChoice();
+        playRound(humanSelection, computerSelection);
     }
-  } else if (playerMove === 'paper') {
-    if (computerMove === 'rock') {
-      result = 'You win';
-    } else if (computerMove === 'paper') {
-      result = 'Tie.';
-    } else if (computerMove === 'scissors') {
-      result = 'You lose.';
+    if (humanScore === computerScore) {
+        console.log(`You tied!`);
+    } else if (humanScore > computerScore) {
+        console.log(`You won the game! The final score was ${humanScore}-${computerScore}.`);
+    } else {
+        console.log(`You lost the game! :( The final score was ${humanScore}-${computerScore}.`);
     }
-  } else if (playerMove === 'rock') {
-    if (computerMove == 'rock') {
-      result = 'Tie.'
-    } else if (computerMove === 'paper') {
-      result = 'You lose.'
-    } else if (computerMove === 'scissors') {
-      result = 'You win.'
-    }
-  }
 }
+
+playGame();
